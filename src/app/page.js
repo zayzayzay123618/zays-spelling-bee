@@ -1,75 +1,98 @@
-"use client"; // Required for using state in Next.js App Router
+"use client"; // Required for Next.js App Router
 
 import { useState } from "react";
 
 export default function Home() {
-  const [gameStarted, setGameStarted] = useState(false);
+  const [gameMode, setGameMode] = useState(null);
 
-  const startGame = () => {
-    setGameStarted(true);
+  const startGame = (mode) => {
+    setGameMode(mode);
   };
 
   return (
-    <main style={{ textAlign: "center", padding: "50px" }}>
-      {!gameStarted ? (
+    <main style={{ textAlign: "center", padding: "50px", color: "#fff" }}>
+      {!gameMode ? (
         <>
           <h1>🐝 Welcome to Zay&apos;s Spelling Bee! 🐝</h1>
-          <p>Get ready to test your spelling skills.</p>
+          <p>Choose your game mode:</p>
+
           <button
-            onClick={startGame}
-            style={{
-              padding: "10px 20px",
-              fontSize: "18px",
-              cursor: "pointer",
-              marginTop: "20px",
-              backgroundColor: "#FFD700",
-              border: "none",
-              borderRadius: "10px",
-              fontWeight: "bold",
-            }}
+            onClick={() => startGame("single")}
+            style={buttonStyle}
           >
-            Start Game
+            🎯 Single Player
+          </button>
+
+          <button
+            onClick={() => startGame("teams")}
+            style={buttonStyle}
+          >
+            🤝 Teams Mode
+          </button>
+
+          {/* Hidden Drunk Mode */}
+          <button
+            onClick={() => startGame("drunk")}
+            style={{ ...buttonStyle, visibility: "hidden" }}
+          >
+            🍻 Drunk Mode
           </button>
         </>
       ) : (
-        <GameScreen />
+        <GameScreen mode={gameMode} />
       )}
     </main>
   );
 }
 
 // Game Screen Component
-function GameScreen() {
+function GameScreen({ mode }) {
   return (
     <div>
-      <h2>Spell the Word:</h2>
-      <p style={{ fontSize: "24px", fontWeight: "bold", color: "#333" }}>____</p>
+      <h2>Mode: {mode === "single" ? "Single Player" : mode === "teams" ? "Teams Mode" : "Drunk Mode (Shhh 🤫)"}</h2>
+      <p style={{ fontSize: "24px", fontWeight: "bold", color: "#FFD700" }}>Get ready to spell!</p>
       <input
         type="text"
         placeholder="Type your spelling here..."
-        style={{
-          padding: "10px",
-          fontSize: "16px",
-          borderRadius: "5px",
-          border: "1px solid #ccc",
-          marginTop: "10px",
-        }}
+        style={inputStyle}
       />
       <br />
-      <button
-        style={{
-          marginTop: "10px",
-          padding: "10px 20px",
-          backgroundColor: "#4CAF50",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-          fontSize: "16px",
-        }}
-      >
-        Submit
-      </button>
+      <button style={submitButtonStyle}>Submit</button>
     </div>
   );
 }
+
+// Button Styling
+const buttonStyle = {
+  padding: "10px 20px",
+  fontSize: "18px",
+  cursor: "pointer",
+  margin: "10px",
+  backgroundColor: "#FFD700",
+  border: "none",
+  borderRadius: "10px",
+  fontWeight: "bold",
+  color: "#000",
+};
+
+// Input Box Styling
+const inputStyle = {
+  padding: "10px",
+  fontSize: "16px",
+  borderRadius: "5px",
+  border: "1px solid #ccc",
+  marginTop: "10px",
+};
+
+// Submit Button Styling
+const submitButtonStyle = {
+  marginTop: "10px",
+  padding: "10px 20px",
+  backgroundColor: "#4CAF50",
+  color: "white",
+  border: "none",
+  borderRadius: "5px",
+  cursor: "pointer",
+  fontSize: "16px",
+};
+
