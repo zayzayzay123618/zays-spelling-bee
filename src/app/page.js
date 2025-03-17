@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <main style={{ textAlign: "center", padding: "50px" }}>
-      <h1>🐝 Welcome to Zay's Spelling Bee! 🐝</h1>
+      <h1>🐝 Welcome to Zay&apos;s Spelling Bee! 🐝</h1>
       <p>Get ready to test your spelling skills.</p>
       <button 
         style={{
